@@ -7,7 +7,7 @@ interface GameProps {
     onRestart: () => void;
 }
 
-const Game: React.FC<GameProps> = ({ settings, onFinish, onRestart }) => {
+const Game: React.FC<GameProps> = ({ settings, onFinish,}) => {
     const [score, setScore] = useState(0);
     const [timeLeft, setTimeLeft] = useState(settings.timeLimit);
     const [currentProblem, setCurrentProblem] = useState<{
@@ -17,7 +17,6 @@ const Game: React.FC<GameProps> = ({ settings, onFinish, onRestart }) => {
         answer: number;
     } | null>(null);
     const [userAnswer, setUserAnswer] = useState('');
-    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [skipAvailable, setSkipAvailable] = useState(false);
     const [skipTimer, setSkipTimer] = useState(3);
 
@@ -42,7 +41,6 @@ const Game: React.FC<GameProps> = ({ settings, onFinish, onRestart }) => {
 
         setCurrentProblem({ a, b, operation, answer });
         setUserAnswer('');
-        setIsCorrect(null);
         setSkipAvailable(false);
         setSkipTimer(3);
     }, [settings]);
@@ -71,7 +69,6 @@ const Game: React.FC<GameProps> = ({ settings, onFinish, onRestart }) => {
         const parsedAnswer = parseFloat(userAnswer);
         if (!isNaN(parsedAnswer)) {
             const isAnswerCorrect = parsedAnswer === currentProblem.answer;
-            setIsCorrect(isAnswerCorrect);
 
             if (isAnswerCorrect) {
                 setScore(prev => prev + 1);
